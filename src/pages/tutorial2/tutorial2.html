@@ -1,0 +1,28 @@
+<ion-header>
+
+</ion-header>
+
+<ion-content >
+	<ion-slides #Slides pager>
+		<ion-slide >
+			<p>Tutorial</p>
+    	<img src="assets/imgs/flecha_roja.png" id="right"  fa-align-right ion-fab color="danger" style="border-style: none;background-color: transparent" (click)=" goToNext()">
+		</ion-slide>
+		<ion-slide >
+			<p>Tutorial</p>
+      <img src="assets/imgs/flecha_roja1.png" id="left"  fa-align-right ion-fab color="danger" style="border-style: none;background-color: transparent" (click)=" goToPrev()">
+    	<img src="assets/imgs/flecha_roja.png" id="right"  fa-align-right ion-fab color="danger" style="border-style: none;background-color: transparent" (click)=" goToNext()">
+		</ion-slide>
+		<ion-slide >
+			<p>Tutorial</p>
+  		<img src="assets/imgs/flecha_roja1.png" id="left"  fa-align-right ion-fab color="danger" style="border-style: none;background-color: transparent" (click)=" goToPrev()">
+    	<img src="assets/imgs/flecha_roja.png" id="right"  fa-align-right ion-fab color="danger" style="border-style: none;background-color: transparent" (click)=" goToNext()">
+		</ion-slide>
+
+		<ion-slide >
+			<p>Tutorial</p>
+			<button class="comenzar" color="rojo" (click)="comenzar()" ion-button>Comenzar</button>
+
+		</ion-slide>
+	</ion-slides>
+</ion-content>

@@ -1,0 +1,24 @@
+<ion-content class="background">
+<form #signUpForm="ngForm" (submit)="signIn()">
+  <ion-card >
+		<ion-card-header>
+			TlaqueBACHE
+		</ion-card-header>
+		<ion-card-content>
+			<ion-list no-line>
+				<ion-item>
+          <ion-input  [(ngModel)]="userModel.email" type="email" placeholder="Ingrese correo" autocorrect="off" autocapitalize="none" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                    required></ion-input>
+				</ion-item>
+				<ion-item>
+          <ion-input [(ngModel)]="userModel.password" type="password" placeholder="Ingrese contraseña" name="password" required minlength="6"></ion-input>
+				</ion-item>
+				<a>Olvidaste tu contraseña? <b>Haz click aquí</b></a>
+				<button ion-button block outline color="light">Iniciar Sesión</button>
+			</ion-list>
+		</ion-card-content>
+	</ion-card>
+
+  </form>
+  <button class="bottom" ion-button clear full color="light" (click)="signUp()">¿No tienes una cuenta? Registrate</button>
+</ion-content>

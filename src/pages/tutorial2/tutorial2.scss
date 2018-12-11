@@ -1,0 +1,30 @@
+page-tutorial2 {
+
+    .comenzar{
+      position: absolute;
+        left: 25vw;
+        width: 50vw;
+        top: 80vh;
+    }
+    #left{
+      position: absolute;
+       left: 0px;
+       top: 55vh;
+       padding: 5px;
+       width: 45px;
+       height: auto;
+       margin-left: 15px;
+
+    }
+    #right{
+      position: absolute;
+      right: 0px;
+      top: 55vh;
+      padding: 5px;
+      width: 45px;
+      height: auto;
+      margin-right: 15px;
+    }
+   
+
+}

@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-navbar hideBackButton="false">
+    <button ion-button icon-only menuToggle>
+  	<ion-icon name = "menu"> </ion-icon>
+  </button>
+    <ion-title>
+      tlaqueBACHE
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="signOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="reporte" novalidate (submit)="reportar()">
+    <ion-item>
+      <ion-label stacked>Calle principal</ion-label>
+      <ion-input formControlName="calleP" type="text"
+        placeholder="Ingrese calle principal"
+        [class.invalid]="!reporte.controls.calleP.valid && reporte.controls.calleP.dirty">
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!reporte.controls.calleP.valid && reporte.controls.calleP.dirty">
+      <p>
+        Ingrese una calle válida.
+      </p>
+    </ion-item><br>
+    <ion-item>
+      <ion-label stacked>Primer cruce</ion-label>
+      <ion-input formControlName="calleCruce1" type="text"
+        placeholder="Ingrese primer cruce"
+        [class.invalid]="!reporte.controls.calleCruce1.valid && reporte.controls.calleCruce1.dirty">
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!reporte.controls.calleCruce1.valid && reporte.controls.calleCruce1.dirty">
+      <p>
+        Ingrese una calle válida.
+      </p>
+    </ion-item><br>
+    <ion-item>
+      <ion-label stacked>Segundo cruce</ion-label>
+      <ion-input formControlName="calleCruce2" type="text"
+        placeholder="Ingrese segundo cruce"
+        [class.invalid]="!reporte.controls.calleCruce2.valid && reporte.controls.calleCruce2.dirty">
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!reporte.controls.calleCruce2.valid && reporte.controls.calleCruce2.dirty">
+      <p>
+        Ingrese una calle válida.
+      </p>
+    </ion-item><br>
+    <ion-item>
+      <ion-label stacked>Tipo de calle</ion-label>
+      <ion-input formControlName="tipoCalle" type="text"
+        placeholder="Ingrese tipo de calle"
+        [class.invalid]="!reporte.controls.tipoCalle.valid && reporte.controls.tipoCalle.dirty">
+      </ion-input>
+    </ion-item>
+    <a>Ej. Concreto, empedrado, etc.</a>
+    <ion-item class="error-message" *ngIf="!reporte.controls.tipoCalle.valid && reporte.controls.tipoCalle.dirty">
+      <p>
+        Ingrese un tipo válido.
+      </p>
+    </ion-item><br>
+  
+
+    <ion-item>
+      <button ion-button block type="submit" [disabled]="!reporte.valid">
+        Enviar
+      </button>
+    </ion-item>
+  </form>
+</ion-content>

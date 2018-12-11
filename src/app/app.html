@@ -1,0 +1,16 @@
+<ion-menu [content]="content">
+  <ion-content padding>
+  <ion-title >Menú</ion-title>
+	<ion-item-group>
+    	<ion-item (click)="openHome()" menuClose>
+	    	<ion-icon name="home" item-start></ion-icon>
+	    	Inicio
+		  </ion-item>
+      <ion-item (click)="openReport()" menuClose>
+        <ion-icon name="clipboard" item-start></ion-icon>
+        Reportar
+      </ion-item>
+  </ion-item-group>
+  </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #content></ion-nav>
