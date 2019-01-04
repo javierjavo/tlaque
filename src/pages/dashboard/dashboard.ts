@@ -4,7 +4,7 @@ import { AuthService } from '../../providers/auth-service';
 import { SignInPage } from '../signin/signin';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
-
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -16,16 +16,16 @@ export class DashboardPage {
 
   constructor(
     public navCtrl: NavController,
-    public authService: AuthService) {
+    public authService: AuthService,
+    public storage: Storage) {
   }
 
   signOut() {
     this.authService.signOut();
+    this.storage.remove('user');
     this.navCtrl.setRoot(SignInPage);
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TutorialPage');
-  }
+  
   @ViewChild(Slides) slides: Slides;
 
 /*  goToSlide() {
@@ -46,7 +46,6 @@ export class DashboardPage {
       this.slides.lockSwipeToNext(false);
       this.slides.lockSwipeToPrev(true);
       this.slides.update();
-      console.log("work")
     } else {
 
     }

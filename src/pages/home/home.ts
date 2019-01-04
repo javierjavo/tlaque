@@ -21,9 +21,6 @@ export class HomePage {
   signOut() {
     this.storage.remove('user');
     this.authService.signOut();
-    this.storage.get('user').then((user) => {
-      console.log(user);
-    });
     this.navCtrl.setRoot(SignInPage);
   }
 }

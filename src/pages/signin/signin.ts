@@ -29,17 +29,16 @@ export class SignInPage {
         this.userModel = new UserModel();
     }
 
-    ionViewDidEnter(){
+    ionViewDidLoad(){
         this.show = false;
         this.storage.get('tutorial').then((tuto) => {
-            console.log(tuto)
             if(!tuto) this.navCtrl.setRoot(TutorialPage);
         });
         this.storage.get('user').then((user) => {
-            console.log(user);
-            if(user)if( user.length > 0 ) this.navCtrl.setRoot(DashboardPage);
+            if(user){
+                if( user.length > 0 ) this.navCtrl.setRoot(DashboardPage);
+            }else this.show = true;
         });
-        this.show = true;
     }
 
     async signIn() {
