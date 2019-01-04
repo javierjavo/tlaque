@@ -6,8 +6,10 @@ import { Nav } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../providers/auth-service';
 import { SignInPage } from '../pages/signin/signin';
-import { HomePage } from '../pages/home/home';
 import { ReportPage } from '../pages/report/report';
+import { HomePage } from '../pages/home/home';
+import { ReportesPage } from '../pages/reportes/reportes';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -32,7 +34,9 @@ export class MyApp {
   openReport(){
     this.nav.push(ReportPage);
   }
-
-
+  
+  openList(){
+    this.nav.push(ReportesPage);
+  }
 
 }

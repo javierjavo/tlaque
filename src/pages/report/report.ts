@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
-import { AuthService } from '../../providers/auth-service';
-import { UserModel } from '../../models/user-model';
-import { SignInPage } from '../signin/signin';
+import { NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { FormBuilder, Validators, Form, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators} from '@angular/forms';
 import { FirebaseDataProvider } from '../../providers/firebase-data/firebase-data';
-//import {GoogleMaps,GoogleMap, GoogleMapsEvent, GoogleMapOptions,CameraPosition,MarkerOptions, Marker} from '@ionic-native/google-maps';
+
 @Component({
     selector: 'page-report',
     templateUrl: 'report.html'

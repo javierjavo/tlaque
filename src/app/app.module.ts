@@ -13,11 +13,13 @@ import { AuthService } from '../providers/auth-service';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { SignInPage } from '../pages/signin/signin';
 import { SPage } from '../pages/s/s';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { ReportPage } from '../pages/report/report';
+import { ReportesPage } from '../pages/reportes/reportes';
+import { ReportarPage } from '../pages/reportar/reportar';
+
 import { Tutorial2Page } from '../pages/tutorial2/tutorial2';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 
@@ -36,11 +38,12 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     SignInPage,
     SPage,
     DashboardPage,
     ReportPage,
+    ReportesPage,
+    ReportarPage,
     TutorialPage,
     Tutorial2Page
   ],
@@ -57,11 +60,12 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     SignInPage,
     SPage,
     DashboardPage,
     ReportPage,
+    ReportesPage,
+    ReportarPage,
     TutorialPage,
     Tutorial2Page
   ],

@@ -23,7 +23,7 @@
                 <ion-input [(ngModel)]="userModel.password" type="password" placeholder="Ingrese contraseña" name="password" required minlength="6"></ion-input>
             </ion-item><br><br>
             <div padding-left padding-right padding-top>
-                	<button ion-button block outline color="light"> [disabled]="!signUpForm.form.valid" block>Registrarse</button>
+                <button ion-button block outline color="light" [disabled]="!signUpForm.form.valid" block>Registrarse</button>
             </div>
         </ion-list>
         </ion-list>

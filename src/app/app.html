@@ -6,9 +6,15 @@
 	    	<ion-icon name="home" item-start></ion-icon>
 	    	Inicio
 		  </ion-item>
-      <ion-item (click)="openReport()" menuClose>
-        <ion-icon name="clipboard" item-start></ion-icon>
-        Reportar
+      <ion-item menuClose>
+        <div (click)="openReport()">
+          <ion-icon name="clipboard" item-start></ion-icon>
+          Crear Reporte
+        </div>
+        <div (click)="openList()">
+          <ion-icon name="clipboard" item-start></ion-icon>
+          Mis Reportes
+        </div>
       </ion-item>
   </ion-item-group>
   </ion-content>

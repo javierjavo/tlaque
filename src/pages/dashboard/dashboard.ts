@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
 import { SignInPage } from '../signin/signin';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { ReportesPage } from '../reportes/reportes';
+import { ReportarPage } from '../reportar/reportar';
 
 
 @Component({
@@ -20,6 +22,14 @@ export class DashboardPage {
     public storage: Storage) {
   }
 
+  openList(){
+    this.navCtrl.push(ReportesPage);    
+  }
+
+  CreateReport(){
+    this.navCtrl.push(ReportarPage);    
+  }
+
   signOut() {
     this.authService.signOut();
     this.storage.remove('user');
@@ -28,16 +38,6 @@ export class DashboardPage {
   
   @ViewChild(Slides) slides: Slides;
 
-/*  goToSlide() {
-    this.slides.slideNext();
-    this.slides.isEnd();
-    this.slides.length();
-  }
-  slideChanged() {
-    let currentIndex = this.slides.getActiveIndex();
-    console.log('Current index is', currentIndex);
-  }
-  */
   goToNext(){
     if(!this.slides.isEnd()){
       this.slides.lockSwipeToNext(false);
@@ -46,14 +46,11 @@ export class DashboardPage {
       this.slides.lockSwipeToNext(false);
       this.slides.lockSwipeToPrev(true);
       this.slides.update();
-    } else {
-
     }
   }
 
   goToPrev(){
     if(!this.slides.isBeginning()){
-
       this.slides.lockSwipeToNext(false);
       this.slides.lockSwipeToPrev(false);
       this.slides.slidePrev(800);

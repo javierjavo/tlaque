@@ -1,11 +1,9 @@
-
-
 <ion-content>
   <ion-item no-border>
     <ion-slides #Slides  no-border>
 		    <!-- <ion-slide>
           <img src="assets/imgs/t1.jpeg"> -->
-        <!-- </ion-slide> --> -->
+        <!-- </ion-slide> -->
 		    <!-- <ion-slide>
 			    <img src="assets/imgs/t6.jpeg">
 		    </ion-slide> -->
@@ -20,21 +18,18 @@
 
 <ion-grid>
   <ion-row>
-    <ion-col >
-      <div >Mis Reportes
+    <ion-col (click)="openList()">
+      <div>Mis Reportes
         <ion-icon ios="ios-clipboard-outline" md="md-clipboard"></ion-icon>
       </div>
     </ion-col>
-    <ion-col >
+    <ion-col (click)="CreateReport()">
       <div> Hacer reporte
       <ion-icon ios="ios-home-outline" md="md-home"></ion-icon>
       </div>
     </ion-col>
   </ion-row>
-
-
 </ion-grid>
-
 
 <ion-card>
   <ion-card-header>
@@ -79,9 +74,7 @@
     <button ion-button icon-only menuToggle>
   	<ion-icon name ="menu"> </ion-icon>
     </button>
-    <button ion-button icon-only>
-      <ion-icon ios="ios-home-outline" md="md-home"></ion-icon>
-    </button>
+
     <ion-buttons end>
       <button ion-button icon-only (click)="signOut()">
         <ion-icon name="log-out"></ion-icon>
