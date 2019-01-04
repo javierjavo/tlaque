@@ -3,8 +3,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { User/*, Promise*/} from 'firebase/app';
 import { UserModel } from '../models/user-model';
 
-
-
 @Injectable()
 
 export class AuthService {

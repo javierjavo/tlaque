@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service';
 import { SignInPage } from '../signin/signin';
-
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -14,11 +14,16 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    public authService: AuthService) {
+    public authService: AuthService,
+    public storage: Storage) {
   }
 
   signOut() {
+    this.storage.remove('user');
     this.authService.signOut();
+    this.storage.get('user').then((user) => {
+      console.log(user);
+    });
     this.navCtrl.setRoot(SignInPage);
   }
 }

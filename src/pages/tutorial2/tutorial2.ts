@@ -49,7 +49,6 @@ export class Tutorial2Page {
       this.slides.lockSwipeToNext(false);
       this.slides.lockSwipeToPrev(true);
       this.slides.update();
-      console.log("work")
     } else {
 
     }
@@ -70,7 +69,6 @@ export class Tutorial2Page {
 
   comenzar(){
     this.storage.set('tutorial', true).then(()=>{
-       console.log("no mas tuto");
        this.navCtrl.setRoot(DashboardPage);
      });
   }

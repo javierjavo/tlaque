@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DashboardPage } from '../dashboard/dashboard';
+import { SignInPage } from '../signin/signin';
 import { Tutorial2Page } from '../tutorial2/tutorial2';
 import { Storage } from '@ionic/storage';
 
@@ -12,24 +12,16 @@ import { Storage } from '@ionic/storage';
  export class TutorialPage {
 
    constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
-
    }
 
-   ionViewDidLoad() {
-     console.log('ionViewDidLoad TutorialPage');
-   }
-
-
-   comenzar(){
-     this.storage.set('tutorial', true).then(()=>{
-        console.log("no mas tuto");
-        this.navCtrl.setRoot(DashboardPage);
+  comenzar(){
+      this.storage.set('tutorial', true).then(()=>{
+        this.navCtrl.setRoot(SignInPage);
       });
-   }
-   startSlide(){
-   this.storage.set('tutorial',true).then(()=>{
-     console.log("u better work bitch");
-     this.navCtrl.setRoot(Tutorial2Page);
-     });
- }
- }
+  }
+  startSlide(){
+    this.storage.set('tutorial',true).then(()=>{
+      this.navCtrl.setRoot(Tutorial2Page);
+    });
+  }
+}

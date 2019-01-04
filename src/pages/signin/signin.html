@@ -1,4 +1,4 @@
-<ion-content class="background">
+<ion-content class="background" *ngIf='this.show'>
 <form #signUpForm="ngForm" (submit)="signIn()">
   <ion-card >
 		<ion-card-header>

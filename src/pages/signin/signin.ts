@@ -3,9 +3,10 @@ import { NavController, LoadingController, AlertController } from 'ionic-angular
 import { AuthService } from '../../providers/auth-service';
 import { UserModel } from '../../models/user-model';
 import { SPage } from '../s/s';
-import { HomePage } from '../home/home';
+import { TutorialPage } from '../tutorial/tutorial';
 import { DashboardPage } from '../dashboard/dashboard';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -14,15 +15,31 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 
 export class SignInPage {
-  userModel: UserModel;
+    userModel: UserModel;
+    show = false;
 
     constructor(
       private afAuth: AngularFireAuth,
       public navCtrl: NavController,
       public loadingCtrl: LoadingController,
       public alertCtrl: AlertController,
-      public authService: AuthService) {
-      this.userModel = new UserModel();
+      public authService: AuthService,
+      public storage: Storage
+    ) {
+        this.userModel = new UserModel();
+    }
+
+    ionViewDidEnter(){
+        this.show = false;
+        this.storage.get('tutorial').then((tuto) => {
+            console.log(tuto)
+            if(!tuto) this.navCtrl.setRoot(TutorialPage);
+        });
+        this.storage.get('user').then((user) => {
+            console.log(user);
+            if(user)if( user.length > 0 ) this.navCtrl.setRoot(DashboardPage);
+        });
+        this.show = true;
     }
 
     async signIn() {
@@ -31,17 +48,19 @@ export class SignInPage {
         });
         loading.present();
         try{
-          const RESULT= await this.afAuth.auth.signInWithEmailAndPassword(this.userModel.email, this.userModel.password).then(result => {
-            loading.dismiss();
-            this.navCtrl.setRoot(HomePage);
-        }).catch(error => {
-            loading.dismiss();
-            console.log(error);
-            this.alert('Error','Ha ocurrido un error inesperado. Por favor intente nuevamente.');
-        });
-      } catch (e){
-        console.log(e);
-      }
+            await this.afAuth.auth.signInWithEmailAndPassword(this.userModel.email, this.userModel.password).then( () => {
+                loading.dismiss();
+                this.storage.set('user', this.userModel.email).then(()=>{
+                    this.navCtrl.setRoot(DashboardPage);
+                });
+            }).catch(error => {
+                loading.dismiss();
+                console.log(error);
+                this.alert('Error','Ha ocurrido un error inesperado. Por favor intente nuevamente.');
+            });
+        } catch (e){
+            console.log(e);
+        }
     }
 
     signUp() {
