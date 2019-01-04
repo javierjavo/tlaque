@@ -53,6 +53,7 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
   public boolean initialized = false;
   public PluginManager pluginManager;
   public static String CURRENT_URL;
+  private static final Object timerLock = new Object();
 
   @SuppressLint("NewApi") @Override
   public void initialize(final CordovaInterface cordova, final CordovaWebView webView) {
@@ -112,7 +113,7 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
               errorMsg = PluginUtil.getPgmStrings(activity,"pgm_google_play_invalid_account");
               break;
             case ConnectionResult.LICENSE_CHECK_FAILED:
-              errorMsg = PluginUtil.getPgmStrings(activity,"pgm_google_play_lincense_check_failed");
+              errorMsg = PluginUtil.getPgmStrings(activity,"pgm_google_play_license_check_failed");
               break;
             case ConnectionResult.NETWORK_ERROR:
               errorMsg = PluginUtil.getPgmStrings(activity,"pgm_google_play_network_error");
@@ -152,7 +153,7 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
                     try {
                       activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.gms")));
                     } catch (android.content.ActivityNotFoundException anfe) {
-                      activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=appPackageName")));
+                      activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.google.android.gms")));
                     }
                   }
                 }
@@ -169,7 +170,7 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
         webView.getView().setBackgroundColor(Color.TRANSPARENT);
         webView.getView().setOverScrollMode(View.OVER_SCROLL_NEVER);
         mPluginLayout = new MyPluginLayout(webView, activity);
-        mPluginLayout.isSuspended = true;
+        mPluginLayout.stopTimer();
 
 
         // Check the API key
@@ -220,7 +221,7 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
 
   @Override
   public boolean onOverrideUrlLoading(String url) {
-    mPluginLayout.isSuspended = true;
+    mPluginLayout.stopTimer();
     /*
     this.activity.runOnUiThread(new Runnable() {
       @Override
@@ -263,6 +264,8 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
             CordovaGoogleMaps.this.resume(args, callbackContext);
           } else if ("getMap".equals(action)) {
             CordovaGoogleMaps.this.getMap(args, callbackContext);
+          } else if ("getPanorama".equals(action)) {
+            CordovaGoogleMaps.this.getPanorama(args, callbackContext);
           } else if ("removeMap".equals(action)) {
             CordovaGoogleMaps.this.removeMap(args, callbackContext);
           } else if ("backHistory".equals(action)) {
@@ -304,10 +307,7 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
     }
 
     if (mPluginLayout.isSuspended) {
-      mPluginLayout.isSuspended = false;
-      synchronized (mPluginLayout.timerLock) {
-        mPluginLayout.timerLock.notify();
-      }
+      mPluginLayout.updateMapPositions();
     }
     callbackContext.success();
   }
@@ -325,26 +325,27 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
 
 
 
-  public void pause(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if (mPluginLayout == null) {
-      callbackContext.success();
-      return;
-    }
-    mPluginLayout.isSuspended = true;
-    callbackContext.success();
-  }
-  public void resume(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if (mPluginLayout == null) {
-      callbackContext.success();
-      return;
-    }
-    if (mPluginLayout.isSuspended) {
-      mPluginLayout.isSuspended = false;
-      synchronized (mPluginLayout.timerLock) {
-        mPluginLayout.timerLock.notify();
+  public synchronized void pause(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    synchronized (timerLock) {
+      if (mPluginLayout == null) {
+        callbackContext.success();
+        return;
       }
+      mPluginLayout.stopTimer();
+      callbackContext.success();
     }
-    callbackContext.success();
+  }
+  public synchronized void resume(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    synchronized (timerLock) {
+      if (mPluginLayout == null) {
+        callbackContext.success();
+        return;
+      }
+      if (mPluginLayout.isSuspended) {
+        mPluginLayout.startTimer();
+      }
+      callbackContext.success();
+    }
   }
   public void clearHtmlElements(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (mPluginLayout == null) {
@@ -356,27 +357,26 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
   }
   public void putHtmlElements(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
-      final JSONObject elements = args.getJSONObject(0);
-      if (mPluginLayout == null) {
-          callbackContext.success();
-          return;
-      }
-
-      //Log.d(TAG, "--->stopFlag = " + mPluginLayout.stopFlag + ", mPluginLayout.needUpdatePosition = " + mPluginLayout.needUpdatePosition);
-      if (!mPluginLayout.stopFlag || mPluginLayout.needUpdatePosition) {
-          mPluginLayout.putHTMLElements(elements);
-      }
-
-    synchronized (mPluginLayout.timerLock) {
-      mPluginLayout.timerLock.notify();
+    final JSONObject elements = args.getJSONObject(0);
+    if (mPluginLayout == null) {
+        callbackContext.success();
+        return;
     }
+
+    //Log.d(TAG, "--->stopFlag = " + mPluginLayout.stopFlag + ", mPluginLayout.needUpdatePosition = " + mPluginLayout.needUpdatePosition);
+    if (!mPluginLayout.stopFlag || mPluginLayout.needUpdatePosition) {
+        mPluginLayout.putHTMLElements(elements);
+    }
+
+    //mPluginLayout.updateMapPositions();
+    //mPluginLayout.startTimer();
     callbackContext.success();
   }
 
   @Override
   public void onReset() {
     super.onReset();
-    if (mPluginLayout == null || mPluginLayout.pluginMaps == null) {
+    if (mPluginLayout == null || mPluginLayout.pluginOverlays == null) {
       return;
     }
 
@@ -387,21 +387,21 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
 
         mPluginLayout.setBackgroundColor(Color.WHITE);
 
-        Set<String> mapIds = mPluginLayout.pluginMaps.keySet();
-        PluginMap pluginMap;
+        Set<String> mapIds = mPluginLayout.pluginOverlays.keySet();
+        IPluginView pluginOverlay;
 
         // prevent the ConcurrentModificationException error.
         String[] mapIdArray= mapIds.toArray(new String[mapIds.size()]);
         for (String mapId : mapIdArray) {
-          if (mPluginLayout.pluginMaps.containsKey(mapId)) {
-            pluginMap = mPluginLayout.removePluginMap(mapId);
-            pluginMap.remove(null, null);
-            pluginMap.onDestroy();
+          if (mPluginLayout.pluginOverlays.containsKey(mapId)) {
+            pluginOverlay = mPluginLayout.removePluginOverlay(mapId);
+            pluginOverlay.remove(null, null);
+            pluginOverlay.onDestroy();
             mPluginLayout.HTMLNodes.remove(mapId);
           }
         }
         mPluginLayout.HTMLNodes.clear();
-        mPluginLayout.pluginMaps.clear();
+        mPluginLayout.pluginOverlays.clear();
 
         System.gc();
         Runtime.getRuntime().gc();
@@ -412,15 +412,13 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
 
   public void removeMap(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
     String mapId = args.getString(0);
-    if (mPluginLayout.pluginMaps.containsKey(mapId)) {
-      PluginMap pluginMap = mPluginLayout.removePluginMap(mapId);
-      if (pluginMap != null) {
-        pluginMap.remove(null, null);
-        pluginMap.onDestroy();
-        pluginMap.objects.clear();
-        pluginMap.objects.destroy();
+    if (mPluginLayout.pluginOverlays.containsKey(mapId)) {
+      IPluginView pluginOverlay = mPluginLayout.removePluginOverlay(mapId);
+      if (pluginOverlay != null) {
+        pluginOverlay.remove(null, null);
+        pluginOverlay.onDestroy();
         mPluginLayout.HTMLNodes.remove(mapId);
-        pluginMap = null;
+        pluginOverlay = null;
       }
 
       try {
@@ -451,13 +449,14 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
     //------------------------------------------
     // Create an instance of PluginMap class.
     //------------------------------------------
-    String mapId = args.getString(0);
+    JSONObject meta = args.getJSONObject(0);
+    String mapId = meta.getString("id");
     PluginMap pluginMap = new PluginMap();
     pluginMap.privateInitialize(mapId, cordova, webView, null);
     pluginMap.initialize(cordova, webView);
     pluginMap.mapCtrl = CordovaGoogleMaps.this;
     pluginMap.self = pluginMap;
-    ((MyPlugin)pluginMap).CURRENT_PAGE_URL = CURRENT_URL;
+    pluginMap.CURRENT_PAGE_URL = CURRENT_URL;
 
     PluginEntry pluginEntry = new PluginEntry(mapId, pluginMap);
     pluginManager.addService(pluginEntry);
@@ -465,6 +464,27 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
     pluginMap.getMap(args, callbackContext);
   }
 
+
+  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+  public void getPanorama(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    //------------------------------------------
+    // Create an instance of PluginStreetView class.
+    //------------------------------------------
+    JSONObject meta = args.getJSONObject(0);
+    String mapId = meta.getString("id");
+    Log.d(TAG, "---> mapId = " + mapId);
+    PluginStreetViewPanorama pluginStreetView = new PluginStreetViewPanorama();
+    pluginStreetView.privateInitialize(mapId, cordova, webView, null);
+    pluginStreetView.initialize(cordova, webView);
+    pluginStreetView.mapCtrl = CordovaGoogleMaps.this;
+    pluginStreetView.self = pluginStreetView;
+    pluginStreetView.CURRENT_PAGE_URL = CURRENT_URL;
+
+    PluginEntry pluginEntry = new PluginEntry(mapId, pluginStreetView);
+    pluginManager.addService(pluginEntry);
+
+    pluginStreetView.getPanorama(args, callbackContext);
+  }
 
   @Override
   public void onStart() {
@@ -493,6 +513,9 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
   @Override
   public void onPause(boolean multitasking) {
     super.onPause(multitasking);
+    if (mPluginLayout != null) {
+      mPluginLayout.stopTimer();
+    }
 
     Collection<PluginEntry>pluginEntries = pluginManager.getPluginEntries();
     for (PluginEntry pluginEntry: pluginEntries) {
@@ -525,12 +548,6 @@ public class CordovaGoogleMaps extends CordovaPlugin implements ViewTreeObserver
       }
     }
 
-  }
-
-  protected void sendNoResult(CallbackContext callbackContext) {
-    PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
-    pluginResult.setKeepCallback(true);
-    callbackContext.sendPluginResult(pluginResult);
   }
 
  /**

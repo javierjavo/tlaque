@@ -40,14 +40,14 @@ public class PluginGroundOverlay extends MyPlugin implements MyPluginInterface  
    */
   public void create(JSONArray args, CallbackContext callbackContext) throws JSONException {
     JSONObject opts = args.getJSONObject(1);
-
-    final String idBase = "" + callbackContext.hashCode();
-    _createGroundOverlay(idBase, opts, callbackContext);
+    String hashCode = args.getString(2);
+    _createGroundOverlay(hashCode, opts, callbackContext);
   }
 
   public void _createGroundOverlay(final String idBase, final JSONObject opts, final CallbackContext callbackContext) throws JSONException {
     final GroundOverlayOptions options = new GroundOverlayOptions();
     final JSONObject properties = new JSONObject();
+    options.anchor(0.5f, 0.5f);
 
     if (opts.has("anchor")) {
       JSONArray anchor = opts.getJSONArray("anchor");
@@ -100,7 +100,7 @@ public class PluginGroundOverlay extends MyPlugin implements MyPluginInterface  
         GroundOverlay groundOverlay = self.map.addGroundOverlay(options);
         overlayImage.put("groundoverlay_" + idBase, result.image);
 
-        groundOverlay.setTag("groundoverlay_" + idBase);
+        groundOverlay.setTag(idBase);
 
         pluginMap.objects.put("groundoverlay_" + idBase, groundOverlay);
 
@@ -113,7 +113,7 @@ public class PluginGroundOverlay extends MyPlugin implements MyPluginInterface  
 
         JSONObject resultJSON = new JSONObject();
         try {
-          resultJSON.put("hashCode", groundOverlay.hashCode());
+          resultJSON.put("hashCode", idBase);
           resultJSON.put("id", "groundoverlay_" + idBase);
         } catch (Exception e) {
           e.printStackTrace();
@@ -411,14 +411,14 @@ public class PluginGroundOverlay extends MyPlugin implements MyPluginInterface  
       return;
     }
 
-    AsyncLoadImage.AsyncLoadImageOptions imageOptions = new AsyncLoadImage.AsyncLoadImageOptions();
+    final AsyncLoadImage.AsyncLoadImageOptions imageOptions = new AsyncLoadImage.AsyncLoadImageOptions();
     imageOptions.height = -1;
     imageOptions.width = -1;
     imageOptions.noCaching = true;
     imageOptions.url = imgUrl;
     final int taskId = imageOptions.hashCode();
 
-    AsyncLoadImageInterface onComplete = new AsyncLoadImageInterface() {
+    final AsyncLoadImageInterface onComplete = new AsyncLoadImageInterface() {
 
       @Override
       public void onPostExecute(AsyncLoadImage.AsyncLoadImageResult result) {
@@ -433,15 +433,20 @@ public class PluginGroundOverlay extends MyPlugin implements MyPluginInterface  
         imageLoadingTasks.remove(taskId).cancel(true);
       }
     };
-    final AsyncLoadImage task = new AsyncLoadImage(cordova, webView, imageOptions, onComplete);
-    //cordova.getActivity().runOnUiThread(new Runnable() {
-    //  @Override
-    //  public void run() {
-    //    task.execute();
-    //  }
-    //});
-    task.execute();
-    imageLoadingTasks.put(taskId, task);
+    cordova.getActivity().runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        AsyncLoadImage task = new AsyncLoadImage(cordova, webView, imageOptions, onComplete);
+        //cordova.getActivity().runOnUiThread(new Runnable() {
+        //  @Override
+        //  public void run() {
+        //    task.execute();
+        //  }
+        //});
+        task.execute();
+        imageLoadingTasks.put(taskId, task);
+      }
+    });
 
 
 /*

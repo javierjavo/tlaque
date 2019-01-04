@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -72,9 +73,13 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     FirebaseDataProvider
   ]
 })
 export class AppModule {}
+/*
+ionic cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="AIzaSyDk6kaDFNfmDoRanP-4N1Ih-GrQ8YsKqdA" --variable API_KEY_FOR_IOS="AIzaSyDk6kaDFNfmDoRanP-4N1Ih-GrQ8YsKqdA" --save
+*/
