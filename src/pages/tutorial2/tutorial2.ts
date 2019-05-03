@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
-import { DashboardPage } from '../dashboard/dashboard';
+import { SignInPage } from '../signin/signin';
 import { Storage } from '@ionic/storage';
 
 
@@ -69,8 +69,8 @@ export class Tutorial2Page {
 
   comenzar(){
     this.storage.set('tutorial', true).then(()=>{
-       this.navCtrl.setRoot(DashboardPage);
-     });
+      this.navCtrl.setRoot(SignInPage);
+    });
   }
 
 }
