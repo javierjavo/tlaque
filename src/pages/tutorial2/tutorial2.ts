@@ -66,7 +66,6 @@ export class Tutorial2Page {
     }
   }
 
-
   comenzar(){
     this.storage.set('tutorial', true).then(()=>{
       this.navCtrl.setRoot(SignInPage);

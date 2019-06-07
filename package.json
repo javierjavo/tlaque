@@ -64,7 +64,9 @@
         "API_KEY_FOR_ANDROID": "AIzaSyDk6kaDFNfmDoRanP-4N1Ih-GrQ8YsKqdA",
         "API_KEY_FOR_IOS": "AIzaSyDk6kaDFNfmDoRanP-4N1Ih-GrQ8YsKqdA",
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
-        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
+        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background.",
+        "PLAY_SERVICES_VERSION": "15.0.1",
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
       }
     },
     "platforms": [
