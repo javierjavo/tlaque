@@ -15,19 +15,23 @@ export class ReportarPage {
     CRUCE1:'',
     CRUCE2:'',
     COLONIA:'',
-    TIPO_SUELO:''
+    TIPO_SUELO:'',
+    VIALIDAD:''
   }
 
   constructor(
-      private http: HttpClient,
-      public navCtrl: NavController,
+    private http: HttpClient,
+    public navCtrl: NavController,
     public storage: Storage) {
+      storage.get('iduser').then(x => {
+        this.data.USERID = x.TYPE;
+      });
   }
 
   ionViewDidLoad(){
   }
   sendReport(){
-    this.http.get('http://tlaquebache.com.mx/q.php?key=addReport&USERID='+this.data.USERID+'&CALLE='+this.data.CALLE+'&CRUCE1='+this.data.CRUCE1+'&CRUCE2='+this.data.CRUCE2+'&COLONIA='+this.data.COLONIA+'&TIPO_SUELO='+this.data.TIPO_SUELO);
+    this.http.get('http://tlaquebache.com.mx/q.php?key=addReport&USERID='+this.data.USERID+'&CALLE='+this.data.CALLE+'&CRUCE1='+this.data.CRUCE1+'&CRUCE2='+this.data.CRUCE2+'&COLONIA='+this.data.COLONIA+'&TIPO_SUELO='+this.data.TIPO_SUELO+'&VIALIDAD='+this.data.VIALIDAD).subscribe((response) => {});
     this.navCtrl.push(SignInPage);
   }
 

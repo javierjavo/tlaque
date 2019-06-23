@@ -49,12 +49,10 @@ var ReportesPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-reportes',template:/*ion-inline-start:"/Users/Javier/Documents/GitHub/tlaque/src/pages/reportes/reportes.html"*/'<!--\n  Generated template for the ReportesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Reportes</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  {{userType}}\n  <ion-list>\n    <ion-item *ngFor="let item of reportes">\n      <div>item</div>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/Javier/Documents/GitHub/tlaque/src/pages/reportes/reportes.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */]) === "function" && _d || Object])
     ], ReportesPage);
     return ReportesPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=reportes.js.map
@@ -340,7 +338,6 @@ var SPage = (function () {
     }
     SPage.prototype.signUp = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
             var loading;
             return __generator(this, function (_a) {
                 loading = this.loadingCtrl.create({
@@ -348,11 +345,11 @@ var SPage = (function () {
                 });
                 loading.present();
                 try {
-                    this.http.get('http://tlaquebache.com.mx/q.php?key=login&user=' + this.userModel.email + '&pass=' + this.userModel.password).subscribe(function (response) {
+                    this.http.get('http://tlaquebache.com.mx/q.php?key=addUser&user=' + this.userModel.email + '&pass=' + this.userModel.password).subscribe(function (response) {
                         console.log(response);
-                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__signin_signin__["a" /* SignInPage */]);
-                        loading.dismiss();
                     });
+                    loading.dismiss();
+                    this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__signin_signin__["a" /* SignInPage */]);
                 }
                 catch (e) {
                     loading.dismiss();
@@ -374,12 +371,10 @@ var SPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-s',template:/*ion-inline-start:"/Users/Javier/Documents/GitHub/tlaque/src/pages/s/s.html"*/'<ion-header>\n    <ion-navbar hideBackButton="false">\n        <ion-title>Registrarse</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="background"><br><br><br><br><br><br>\n    <form #signUpForm="ngForm" (submit)="signUp()">\n      <ion-card>\n        <ion-card-header>\n          Registrarse\n        </ion-card-header>\n      <ion-card-content>\n        	<ion-list no-line>\n            <ion-list>\n            <ion-item>\n                <ion-label stacked>Correo electrónico</ion-label>\n                <ion-input [(ngModel)]="userModel.email" type="email" placeholder="Ingrese correo" autocorrect="off" autocapitalize="none" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"\n                    required></ion-input>\n            </ion-item><br><br>\n            <ion-item>\n                <ion-label stacked>Contraseña</ion-label>\n                <ion-input [(ngModel)]="userModel.password" type="password" placeholder="Ingrese contraseña" name="password" required minlength="6"></ion-input>\n            </ion-item><br><br>\n            <div padding-left padding-right padding-top>\n                <button ion-button block outline color="light" [disabled]="!signUpForm.form.valid" block>Registrarse</button>\n            </div>\n        </ion-list>\n        </ion-list>\n      </ion-card-content>\n    </ion-card>\n    </form>\n</ion-content>\n'/*ion-inline-end:"/Users/Javier/Documents/GitHub/tlaque/src/pages/s/s.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object])
     ], SPage);
     return SPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=s.js.map
@@ -503,6 +498,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ReportarPage = (function () {
     function ReportarPage(http, navCtrl, storage) {
+        var _this = this;
         this.http = http;
         this.navCtrl = navCtrl;
         this.storage = storage;
@@ -512,18 +508,22 @@ var ReportarPage = (function () {
             CRUCE1: '',
             CRUCE2: '',
             COLONIA: '',
-            TIPO_SUELO: ''
+            TIPO_SUELO: '',
+            VIALIDAD: ''
         };
+        storage.get('iduser').then(function (x) {
+            _this.data.USERID = x.TYPE;
+        });
     }
     ReportarPage.prototype.ionViewDidLoad = function () {
     };
     ReportarPage.prototype.sendReport = function () {
-        this.http.get('http://tlaquebache.com.mx/q.php?key=addReport&USERID=' + this.data.USERID + '&CALLE=' + this.data.CALLE + '&CRUCE1=' + this.data.CRUCE1 + '&CRUCE2=' + this.data.CRUCE2 + '&COLONIA=' + this.data.COLONIA + '&TIPO_SUELO=' + this.data.TIPO_SUELO);
+        this.http.get('http://tlaquebache.com.mx/q.php?key=addReport&USERID=' + this.data.USERID + '&CALLE=' + this.data.CALLE + '&CRUCE1=' + this.data.CRUCE1 + '&CRUCE2=' + this.data.CRUCE2 + '&COLONIA=' + this.data.COLONIA + '&TIPO_SUELO=' + this.data.TIPO_SUELO + '&VIALIDAD=' + this.data.VIALIDAD).subscribe(function (response) { });
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__signin_signin__["a" /* SignInPage */]);
     };
     ReportarPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-reportar',template:/*ion-inline-start:"/Users/Javier/Documents/GitHub/tlaque/src/pages/reportar/reportar.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Reportar</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <br><label for="">USERID:</label>\n  <input type="text" [(ngModel)]="data.USERID" class="e1" >\n  <br><label for="">CALLE:</label>\n  <input type="text" [(ngModel)]="data.CALLE" class="e1" >\n  <br><label for="">CRUCE1:</label>\n  <input type="text" [(ngModel)]="data.CRUCE1" class="e1" >\n  <br><label for="">CRUCE2:</label>\n  <input type="text" [(ngModel)]="data.CRUCE2" class="e1" >\n  <br><label for="">COLONIA:</label>\n  <input type="text" [(ngModel)]="data.COLONIA" class="e1" >\n  <br><label for="">TIPO_SUELO:</label>\n  <select [(ngModel)]="data.TIPO_SUELO" class="e1">\n    <option value="1">1</option>\n    <option value="2">2</option>\n    <option value="3">3</option>\n  </select>\n  <button (click)=\'sendReport()\'>send</button>\n</ion-content>'/*ion-inline-end:"/Users/Javier/Documents/GitHub/tlaque/src/pages/reportar/reportar.html"*/,
+            selector: 'page-reportar',template:/*ion-inline-start:"/Users/Javier/Documents/GitHub/tlaque/src/pages/reportar/reportar.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Reportar</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <br><label for="">CALLE:</label>\n  <input type="text" [(ngModel)]="data.CALLE" class="e1" >\n  <br><label for="">VIALIDAD:</label>\n  <input type="text" [(ngModel)]="data.VIALIDAD" class="e1" >\n  <br><label for="">CRUCE1:</label>\n  <input type="text" [(ngModel)]="data.CRUCE1" class="e1" >\n  <br><label for="">CRUCE2:</label>\n  <input type="text" [(ngModel)]="data.CRUCE2" class="e1" >\n  <br><label for="">COLONIA:</label>\n  <input type="text" [(ngModel)]="data.COLONIA" class="e1" >\n  <br><label for="">TIPO_SUELO:</label>\n  <select [(ngModel)]="data.TIPO_SUELO" class="e1">\n    <option value="1">1</option>\n    <option value="2">2</option>\n    <option value="3">3</option>\n  </select>\n  <button (click)=\'sendReport()\'>send</button>\n</ion-content>'/*ion-inline-end:"/Users/Javier/Documents/GitHub/tlaque/src/pages/reportar/reportar.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
     ], ReportarPage);

@@ -1,27 +1,11 @@
 <?php
    header("Access-Control-Allow-Origin: *");
-   // Define headers & database connection parameters
-   use PHPMailer\PHPMailer\PHPMailer;
-   use PHPMailer\PHPMailer\Exception;
-
-   require '<path/to/PHPMailer/src/Exception.php';
-   require 'path/to/PHPMailer/src/PHPMailer.php';
-   require 'path/to/PHPMailer/src/SMTP.php';
 
    $hn      = '162.241.2.158';
    $un      = 'tlaqueb1_API';
    $pwd     = 'Tlaquebache!2018';
    $db      = 'tlaqueb1_tlaquebache';
    $cs      = 'utf8';
-
-   $mail = new PHPMailer(true);
-   $mail->SMTPDebug = 3; 
-   $mail->isSMTP("mail.tlaquebache.com.mx"); 
-   $mail->Username = 'Tu correo de admin aqui'; 
-   $mail->Password = 'Mala practica pero tu contraseña de admin aqui';
-   $mail->SMTPSecure = 'tls';
-   $mail->Port = 587;
-   $mail->setFrom('Tlaquebache System recovery', 'Account Manager');
 
    $dsn 	= "mysql:host=" . $hn . ";port=3306;dbname=" . $db . ";charset=" . $cs;
    $opt 	= array(
@@ -39,7 +23,7 @@
                $user = md5($_GET["user"]);
                $pass = md5($_GET["pass"]);
                try {
-                  $stmt = $pdo->query("SELECT USER_ID FROM USER WHERE username = '$user' AND password = '$pass'");
+                  $stmt = $pdo->query("SELECT USER_ID,TYPE FROM USER WHERE USR='$user' AND PSS = '$pass'");
                   while($row  = $stmt->fetch(PDO::FETCH_OBJ))
                      $data[] = $row;
                   echo json_encode($data);
@@ -75,22 +59,7 @@
 
          break;
          case 'changePassword':
-            $token = chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
-            /* 
-               Algotrithm:
-               Ask for user account (mail)
-               Send mail with token for recovery
-               Redirect from mail to a recover page
-               Show form with 3 boxes (Enter token, Enter new pass and Retype new pass)
-               Submit button
-               Redirect to a login form
-            */
-            $pdoMail->query("SELECT USR FROM USER WHERE USR = ".$user);
-            $mail->addAddress($user);
-            $mail->Subject = 'Password Reset Request';
-            $mail->Body = '<div style="top: 20%; left: 20%;">This is your token requested to reset your password</div>
-                           <div style="top: 30%; left: 20%;">'.$token.'</div>';
-            $mail->AltBody = 'This is your token requested to reset your password, in case you have not made this request just ignore this mail';
+            
          break;
          case 'getReport':
             $userID = $_GET["userID"];
@@ -107,9 +76,16 @@
             }
          break;
          case 'addReport':
+            $USERID = $_GET["USERID"];
+            $CALLE = $_GET["CALLE"];
+            $CRUCE1 = $_GET["CRUCE1"];
+            $CRUCE2 = $_GET["CRUCE2"];
+            $COLONIA = $_GET["COLONIA"];
+            $TIPO_SUELO = $_GET["TIPO_SUELO"];
+            $VIALIDAD = $_GET["VIALIDAD"];
             try {
-               if( $pdo->query("INSERT INTO tabla (valores) VALUES ('$vars', '$vars')") === TRUE){                 
-                  echo json_encode('done');
+               if( $pdo->query("INSERT INTO REPORTES (USERID,CALLE,CRUCE1,CRUCE2,COLONIA,TIPO_SUELO,PESO,VIALIDAD) VALUES ('$USERID','$CALLE','$CRUCE1','$CRUCE2','$COLONIA','$TIPO_SUELO',1,'$VIALIDAD')") === TRUE){
+                  echo json_encode('{done}');
                }
             }
             catch(PDOException $e){

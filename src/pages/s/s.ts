@@ -26,11 +26,11 @@ export class SPage {
       });
       loading.present();
       try{
-        this.http.get('http://tlaquebache.com.mx/q.php?key=login&user='+this.userModel.email+'&pass='+this.userModel.password).subscribe((response) => {
+        this.http.get('http://tlaquebache.com.mx/q.php?key=addUser&user='+this.userModel.email+'&pass='+this.userModel.password).subscribe((response) => {
             console.log(response);
-            this.navCtrl.push(SignInPage);
-            loading.dismiss();
         });
+        loading.dismiss();
+        this.navCtrl.push(SignInPage);
       }catch(e) {
         loading.dismiss();
         console.log(e);
