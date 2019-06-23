@@ -18,9 +18,14 @@ export class ReportesPage {
     private http: HttpClient) {
       storage.get('iduser').then(x => {
         this.userType =  x.TYPE;
-        this.http.get('http://tlaquebache.com.mx/q.php?key=getReport&userID='+x.USER_ID).subscribe((response) => {
-          this.reportes = response;
-        });
+        if(x.TYPE == 1)
+          this.http.get('http://tlaquebache.com.mx/q.php?key=getReport&userID='+x.USER_ID).subscribe((response) => {
+            this.reportes = response;
+          });
+        else
+        this.http.get('http://tlaquebache.com.mx/q.php?key=getWorkerReport&userID='+x.USER_ID).subscribe((response) => {
+            this.reportes = response;
+          });
       });
   }
 

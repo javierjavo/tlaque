@@ -23,7 +23,7 @@
                $user = md5($_GET["user"]);
                $pass = md5($_GET["pass"]);
                try {
-                  $stmt = $pdo->query("SELECT USER_ID,TYPE FROM USER WHERE USR='$user' AND PSS = '$pass'");
+                  $stmt = $pdo->query("SELECT USER_ID,TYPE FROM users WHERE USR='$user' AND PSS = '$pass'");
                   while($row  = $stmt->fetch(PDO::FETCH_OBJ))
                      $data[] = $row;
                   echo json_encode($data);
@@ -38,8 +38,8 @@
                $user = md5($_GET["user"]);
                $pass = md5($_GET["pass"]);
                try {
-                  if( $pdo->query("INSERT INTO USER (USR, PSS) VALUES ('$user', '$pass')") === TRUE){
-                     $stmt = $pdo->query("SELECT USER_ID FROM USER WHERE USR = '$user' AND password = '$pass'");
+                  if( $pdo->query("INSERT INTO users (USR, PSS) VALUES ('$user', '$pass')") === TRUE){
+                     $stmt = $pdo->query("SELECT USER_ID FROM users WHERE USR = '$user' AND password = '$pass'");
                      while($row  = $stmt->fetch(PDO::FETCH_OBJ))
                         $data[] = $row;
                      echo json_encode($data);
@@ -65,7 +65,26 @@
             $userID = $_GET["userID"];
             if(is_numeric( $userID )){
                try {
-                  $stmt = $pdo->query('SELECT * FROM REPORTES WHERE USERID ='.$userID);
+                  $stmt = $pdo->query('SELECT * FROM reportes WHERE USERID ='.$userID);
+                  while($row  = $stmt->fetch(PDO::FETCH_OBJ)) 
+                     $data[] = $row;
+                  echo json_encode($data);
+               }
+               catch(PDOException $e){
+                  echo $e->getMessage();
+               }
+            }
+         break;
+            case 'getWorkerReport':
+            $userID = $_GET["userID"];
+            $idEquipo = 0;
+            if(is_numeric( $userID )){
+               try {
+                  foreach ($pdo->query("SELECT ID_EQUIPO FROM obreros WHERE USERID=$userID") as $row) {
+                     $idEquipo = str_replace('{"ID_EQUIPO":','',strval(json_encode($row)));
+                     $idEquipo = str_replace('}','',$idEquipo);
+                  }
+                  $stmt = $pdo->query("SELECT * FROM reportes WHERE STATUS='A' AND ID_EQUIPO='$idEquipo'");
                   while($row  = $stmt->fetch(PDO::FETCH_OBJ)) 
                      $data[] = $row;
                   echo json_encode($data);
@@ -84,7 +103,7 @@
             $TIPO_SUELO = $_GET["TIPO_SUELO"];
             $VIALIDAD = $_GET["VIALIDAD"];
             try {
-               if( $pdo->query("INSERT INTO REPORTES (USERID,CALLE,CRUCE1,CRUCE2,COLONIA,TIPO_SUELO,PESO,VIALIDAD) VALUES ('$USERID','$CALLE','$CRUCE1','$CRUCE2','$COLONIA','$TIPO_SUELO',1,'$VIALIDAD')") === TRUE){
+               if( $pdo->query("INSERT INTO reportes (USERID,CALLE,CRUCE1,CRUCE2,COLONIA,TIPO_SUELO,PESO,VIALIDAD) VALUES ('$USERID','$CALLE','$CRUCE1','$CRUCE2','$COLONIA','$TIPO_SUELO',1,'$VIALIDAD')") === TRUE){
                   echo json_encode('{done}');
                }
             }
