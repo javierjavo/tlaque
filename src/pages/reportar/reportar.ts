@@ -26,9 +26,8 @@ export class ReportarPage {
 
   ionViewDidLoad(){
   }
-
   sendReport(){
-    this.http.get('http://tlaquebache.com.mx/q.php?key=addReport&='+this.data.USERID+this.data.CALLE+this.data.CRUCE1+this.data.CRUCE2+this.data.COLONIA+this.data.TIPO_SUELO);
+    this.http.get('http://tlaquebache.com.mx/q.php?key=addReport&USERID='+this.data.USERID+'&CALLE='+this.data.CALLE+'&CRUCE1='+this.data.CRUCE1+'&CRUCE2='+this.data.CRUCE2+'&COLONIA='+this.data.COLONIA+'&TIPO_SUELO='+this.data.TIPO_SUELO);
     this.navCtrl.push(SignInPage);
   }
 
