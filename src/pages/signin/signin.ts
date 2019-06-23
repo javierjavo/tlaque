@@ -5,7 +5,7 @@ import { UserModel } from '../../models/user-model';
 import { SPage } from '../s/s';
 import { TutorialPage } from '../tutorial/tutorial';
 import { DashboardPage } from '../dashboard/dashboard';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 
 
@@ -19,7 +19,7 @@ export class SignInPage {
     show = false;
 
     constructor(
-      private afAuth: AngularFireAuth,
+      private http: HttpClient,
       public navCtrl: NavController,
       public loadingCtrl: LoadingController,
       public alertCtrl: AlertController,
@@ -47,15 +47,13 @@ export class SignInPage {
         });
         loading.present();
         try{
-            await this.afAuth.auth.signInWithEmailAndPassword(this.userModel.email, this.userModel.password).then( () => {
+            this.http.get('http://tlaquebache.com.mx/q.php?key=login&user='+this.userModel.email+'&pass='+this.userModel.password).subscribe((response) => {
                 loading.dismiss();
-                this.storage.set('user', this.userModel.email).then(()=>{
+                if( response[0] ){
+                    this.storage.set('iduser', response[0]);
+                    this.storage.set('user', this.userModel.email);
                     this.navCtrl.setRoot(DashboardPage);
-                });
-            }).catch(error => {
-                loading.dismiss();
-                console.log(error);
-                this.alert('Error','Ha ocurrido un error inesperado. Por favor intente nuevamente.');
+                }
             });
         } catch (e){
             console.log(e);

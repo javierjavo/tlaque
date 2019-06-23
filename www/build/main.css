@@ -25777,10 +25777,9 @@ page-dashboard ion-grid ion-row div ion-icon {
   border-bottom: 1px solid #FF6153;
 }
 
-page-reportar #map_canvas {
-  display: block;
-  height: 100%;
-  width: 100%;
+page-reportar .e1 {
+  border: block 1;
+  background-color: gray;
 }
 
 page-s .background {

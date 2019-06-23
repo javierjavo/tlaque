@@ -15,11 +15,15 @@ import { ReportarPage } from '../reportar/reportar';
 })
 
 export class DashboardPage {
+  userType;
 
   constructor(
     public navCtrl: NavController,
     public authService: AuthService,
     public storage: Storage) {
+      storage.get('iduser').then(x => {
+        this.userType =  x.TYPE;
+      });
   }
 
   openList(){
@@ -33,6 +37,7 @@ export class DashboardPage {
   signOut() {
     this.authService.signOut();
     this.storage.remove('user');
+    this.storage.remove('iduser');
     this.navCtrl.setRoot(SignInPage);
   }
   

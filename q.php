@@ -107,7 +107,14 @@
             }
          break;
          case 'addReport':
-            
+            try {
+               if( $pdo->query("INSERT INTO tabla (valores) VALUES ('$vars', '$vars')") === TRUE){                 
+                  echo json_encode('done');
+               }
+            }
+            catch(PDOException $e){
+               echo $e->getMessage();
+            }
          break;
          case 'sql':
             $query = $_GET["query"];

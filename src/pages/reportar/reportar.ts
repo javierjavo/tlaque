@@ -1,76 +1,35 @@
-import { AuthService } from '../../providers/auth-service';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions
-} from '@ionic-native/google-maps';
+import { HttpClient } from '@angular/common/http';
+import { SignInPage } from '../signin/signin';
 
 @Component({
   selector: 'page-reportar',
   templateUrl: 'reportar.html',
 })
 export class ReportarPage {
-  
-  map: GoogleMap;
+  data = {
+    USERID:'',
+    CALLE:'',
+    CRUCE1:'',
+    CRUCE2:'',
+    COLONIA:'',
+    TIPO_SUELO:''
+  }
 
   constructor(
-    public navCtrl: NavController,
-    public authService: AuthService,
-    public storage: Storage,
-    private googleMaps: GoogleMaps) {
+      private http: HttpClient,
+      public navCtrl: NavController,
+    public storage: Storage) {
   }
 
   ionViewDidLoad(){
-    this.loadMap();
   }
 
-  loadMap(){
-
-    let mapOptions: GoogleMapOptions = {
-      camera: {
-        target: {
-          lat: 20.6409100, // default location
-          lng: -103.2932700 // default location
-        },
-        zoom: 18,
-        tilt: 30
-      }
-    };
-
-    this.map = this.googleMaps.create('map_canvas', mapOptions);
-
-    // Wait the MAP_READY before using any methods.
-    this.map.one(GoogleMapsEvent.MAP_READY)
-    .then(() => {
-      // Now you can use all methods safely.
-      this.getPosition();
-    })
-    .catch(error =>{
-      console.log(error);
-    });
-
+  sendReport(){
+    this.http.get('http://tlaquebache.com.mx/q.php?key=addReport&='+this.data.USERID+this.data.CALLE+this.data.CRUCE1+this.data.CRUCE2+this.data.COLONIA+this.data.TIPO_SUELO);
+    this.navCtrl.push(SignInPage);
   }
 
-  getPosition(): void{
-    this.map.getMyLocation()
-    .then(response => {
-      this.map.moveCamera({
-        target: response.latLng
-      });
-      this.map.addMarker({
-        title: 'My Position',
-        icon: 'blue',
-        animation: 'DROP',
-        position: response.latLng
-      });
-    })
-    .catch(error =>{
-      console.log(error);
-    });
-  }
 }

@@ -1,25 +1,22 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
-import { AuthService } from '../../providers/auth-service';
 import { UserModel } from '../../models/user-model';
 import { SignInPage } from '../signin/signin';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'page-s',
     templateUrl: 's.html'
-
 })
 
 export class SPage {
   userModel: UserModel;
 
   constructor(
-      private afAuth: AngularFireAuth,
+      private http: HttpClient,
       public navCtrl: NavController,
       public loadingCtrl: LoadingController,
-      public alertCtrl: AlertController,
-      public authService: AuthService) {
+      public alertCtrl: AlertController) {
       this.userModel = new UserModel();
   }
 
@@ -29,16 +26,13 @@ export class SPage {
       });
       loading.present();
       try{
-        const RESULT= await this.afAuth.auth.createUserWithEmailAndPassword(this.userModel.email, this.userModel.password).then(result => {
-            console.log(RESULT);
-            loading.dismiss();
+        this.http.get('http://tlaquebache.com.mx/q.php?key=login&user='+this.userModel.email+'&pass='+this.userModel.password).subscribe((response) => {
+            console.log(response);
             this.navCtrl.push(SignInPage);
-        }).catch(error => {
             loading.dismiss();
-            console.log(error);
-            this.alert('Error', 'Ha ocurrido un error inesperado. Por favor intente nuevamente.');
         });
       }catch(e) {
+        loading.dismiss();
         console.log(e);
       }
   }

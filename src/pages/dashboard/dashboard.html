@@ -23,7 +23,7 @@
         <ion-icon ios="ios-clipboard-outline" md="md-clipboard"></ion-icon>
       </div>
     </ion-col>
-    <ion-col (click)="CreateReport()">
+    <ion-col (click)="CreateReport()" *ngIf="userType == 1">
       <div> Hacer reporte
       <ion-icon ios="ios-home-outline" md="md-home"></ion-icon>
       </div>

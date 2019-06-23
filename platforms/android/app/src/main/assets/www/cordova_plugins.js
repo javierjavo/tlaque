@@ -269,6 +269,14 @@ module.exports = [
     "file": "plugins/cordova-plugin-googlemaps/www/js_CordovaGoogleMaps-for-android_ios.js",
     "pluginId": "cordova-plugin-googlemaps",
     "runs": true
+  },
+  {
+    "id": "cordova-sqlite-storage.SQLitePlugin",
+    "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+    "pluginId": "cordova-sqlite-storage",
+    "clobbers": [
+      "SQLitePlugin"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -280,7 +288,8 @@ module.exports.metadata =
   "cordova-plugin-splashscreen": "4.0.3",
   "cordova-plugin-ionic-webview": "4.0.1",
   "cordova-plugin-firebase-realtime-database": "0.0.2",
-  "cordova-plugin-googlemaps": "2.6.2"
+  "cordova-plugin-googlemaps": "2.6.2",
+  "cordova-sqlite-storage": "3.2.0"
 };
 // BOTTOM OF METADATA
 });
