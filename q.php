@@ -106,9 +106,9 @@
             # el proyecto undiendo a belen para salbar su propia materia con la frace "y lo volveria a haer"
             foreach ($pdo->query("SELECT PESO FROM reportes WHERE CALLE='$CALLE' and CRUCE1='$CRUCE1' and CRUCE2='$CRUCE2' and COLONIA='$COLONIA' and TIPO_SUELO='$TIPO_SUELO'") as $row) {
                $PESO = str_replace('{"ID_EQUIPO":','',strval(json_encode($row)));
-               $PESO = (int)str_replace('}','',$PESO)+1;
+               $PESO = (int)str_replace('}','',$idEquipo)+1;
             }
-            if( $PESO > 0 ){
+            if( $PESO ){
                if( $pdo->query("UPDATE reportes set PESO='$PESO' where CALLE='$CALLE' and CRUCE1='$CRUCE1' and CRUCE2='$CRUCE2' and COLONIA='$COLONIA'") === TRUE){
                   echo json_encode('{done}');
                }

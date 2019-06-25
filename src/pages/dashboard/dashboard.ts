@@ -7,6 +7,7 @@ import { Slides } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ReportesPage } from '../reportes/reportes';
 import { ReportarPage } from '../reportar/reportar';
+import { ContactPage }  from '../contact/contact';
 
 
 @Component({
@@ -27,11 +28,14 @@ export class DashboardPage {
   }
 
   openList(){
-    this.navCtrl.push(ReportesPage);    
+    this.navCtrl.push(ReportesPage);
   }
 
   CreateReport(){
-    this.navCtrl.push(ReportarPage);    
+    this.navCtrl.push(ReportarPage);
+  }
+  ContactUs(){
+    this.navCtrl.push(ContactPage);
   }
 
   signOut() {
@@ -40,7 +44,7 @@ export class DashboardPage {
     this.storage.remove('iduser');
     this.navCtrl.setRoot(SignInPage);
   }
-  
+
   @ViewChild(Slides) slides: Slides;
 
   goToNext(){

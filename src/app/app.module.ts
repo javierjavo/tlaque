@@ -20,6 +20,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { ReportPage } from '../pages/report/report';
 import { ReportesPage } from '../pages/reportes/reportes';
 import { ReportarPage } from '../pages/reportar/reportar';
+import { ContactPage } from '../pages/contact/contact';
 
 import { Tutorial2Page } from '../pages/tutorial2/tutorial2';
 import { TutorialPage } from '../pages/tutorial/tutorial';
@@ -46,7 +47,8 @@ export const firebaseConfig = {
     ReportesPage,
     ReportarPage,
     TutorialPage,
-    Tutorial2Page
+    Tutorial2Page,
+    ContactPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ export const firebaseConfig = {
     ReportesPage,
     ReportarPage,
     TutorialPage,
-    Tutorial2Page
+    Tutorial2Page,
+    ContactPage
   ],
   providers: [
     StatusBar,

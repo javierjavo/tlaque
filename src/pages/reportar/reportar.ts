@@ -24,7 +24,7 @@ export class ReportarPage {
     public navCtrl: NavController,
     public storage: Storage) {
       storage.get('iduser').then(x => {
-        this.data.USERID = x.TYPE;
+        this.data.USERID = x.USER_ID;
       });
   }
 

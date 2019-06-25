@@ -9,13 +9,14 @@ import { SignInPage } from '../pages/signin/signin';
 import { ReportPage } from '../pages/report/report';
 import { HomePage } from '../pages/home/home';
 import { ReportesPage } from '../pages/reportes/reportes';
+import { ContactPage } from '../pages/contact/contact';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  
+
   rootPage:any = SignInPage;
   pages: Array<{title: string, component: any}>;
 
@@ -26,15 +27,18 @@ export class MyApp {
     public authService: AuthService,
     public storage: Storage){
     }
-  
+
   openHome(){
     this.rootPage(HomePage);
+  }
+  ContactUs(){
+    this.nav.push(ContactPage);
   }
 
   openReport(){
     this.nav.push(ReportPage);
   }
-  
+
   openList(){
     this.nav.push(ReportesPage);
   }

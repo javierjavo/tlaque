@@ -5,21 +5,38 @@
 </ion-header>
 
 <ion-content>
-  <br><label for="">CALLE:</label>
+  <ion-item>
+  <br><label for="">Calle:</label>
   <input type="text" [(ngModel)]="data.CALLE" class="e1" >
-  <br><label for="">VIALIDAD:</label>
+</ion-item>
+
+  <ion-item>
+  <br><label for="">Tipo de vialidad:</label>
   <input type="text" [(ngModel)]="data.VIALIDAD" class="e1" >
-  <br><label for="">CRUCE1:</label>
+</ion-item>
+
+  <ion-item>
+  <br><label for="">Cruce 1:</label>
   <input type="text" [(ngModel)]="data.CRUCE1" class="e1" >
-  <br><label for="">CRUCE2:</label>
+</ion-item>
+
+  <ion-item>
+  <br><label for="">Cruce 2:</label>
   <input type="text" [(ngModel)]="data.CRUCE2" class="e1" >
-  <br><label for="">COLONIA:</label>
+</ion-item>
+
+  <ion-item>
+  <br><label for="">Colonia:</label>
   <input type="text" [(ngModel)]="data.COLONIA" class="e1" >
-  <br><label for="">TIPO_SUELO:</label>
+</ion-item>
+
+  <ion-item>
+  <br><label for="">Tipo de suelo:</label>
   <select [(ngModel)]="data.TIPO_SUELO" class="e1">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
+    <option value="1">Cemento</option>
+    <option value="2">Asfalto</option>
+    <option value="3">Concreto</option>
   </select>
-  <button (click)='sendReport()'>send</button>
+  </ion-item>
+  <button (click)='sendReport()'>Enviar</button>
 </ion-content>

@@ -1,3 +1,4 @@
+
 <ion-content>
   <ion-item no-border>
     <ion-slides #Slides  no-border>
@@ -8,66 +9,47 @@
 			    <img src="assets/imgs/t6.jpeg">
 		    </ion-slide> -->
 		    <ion-slide>
-			    <img src="assets/imgs/t3.jpeg">
+			    <img src="assets/imgs/t7.jpg">
 		    </ion-slide>
 		    <ion-slide>
 			    <img src="assets/imgs/t4.jpeg">
+		    </ion-slide>
+        <ion-slide>
+			    <img src="assets/imgs/t3.jpeg">
+		    </ion-slide>
+		    <ion-slide>
+			    <img src="assets/imgs/t1.jpeg">
 		    </ion-slide>
 	 </ion-slides>
   </ion-item>
 
 <ion-grid>
   <ion-row>
-    <ion-col (click)="openList()">
-      <div>Mis Reportes
+    <ion-col id=uno (click)="openList()">
+      <div align center>Mis Reportes
         <ion-icon ios="ios-clipboard-outline" md="md-clipboard"></ion-icon>
       </div>
     </ion-col>
-    <ion-col (click)="CreateReport()" *ngIf="userType == 1">
+    <ion-col id=dos (click)="CreateReport()" *ngIf="userType == 1">
       <div> Hacer reporte
       <ion-icon ios="ios-home-outline" md="md-home"></ion-icon>
       </div>
     </ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col id=tres (click)="openList()">
+      <div align center>Mi perfil
+        <ion-icon name="contact" md="md-clipboard"></ion-icon>
+      </div>
+    </ion-col>
+    <ion-col id=cuatro (click)="ContactUs()" *ngIf="userType == 1">
+      <div> Contactanos
+      <ion-icon name="call" md="md-home"></ion-icon>
+      </div>
+    </ion-col>
+  </ion-row>
 </ion-grid>
 
-<ion-card>
-  <ion-card-header>
-    Tlaquepaque
-  </ion-card-header>
-  <ion-list>
-    <button ion-item>
-      <ion-icon name="cart" item-start></ion-icon>
-
-    </button>
-
-    <button ion-item>
-      <ion-icon name="medical" item-start></ion-icon>
-      Hospital
-    </button>
-
-    <button ion-item>
-      <ion-icon name="cafe" item-start></ion-icon>
-      Cafe
-    </button>
-
-    <button ion-item>
-      <ion-icon name="paw" item-start></ion-icon>
-      Dog Park
-    </button>
-
-    <button ion-item>
-      <ion-icon name="beer" item-start></ion-icon>
-      Pub
-    </button>
-
-    <button ion-item>
-      <ion-icon name="planet" item-start></ion-icon>
-      Space
-    </button>
-
-  </ion-list>
-</ion-card>
 </ion-content>
 <ion-footer>
   <ion-navbar hideBackButton="true">
@@ -82,6 +64,12 @@
     </ion-buttons>
   </ion-navbar>
 </ion-footer>
+
+<!-- <ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon>
+ion-icon name="contact"></ion-icon>
+<ion-icon ios="ios-home-outline" md="md-home"></ion-icon>
+  <ion-icon name="images"></ion-icon>
+  <ion-icon ios="ios-images" md="md-images"></ion-icon> -->
 
 <!-- <ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon>
 ion-icon name="contact"></ion-icon>
